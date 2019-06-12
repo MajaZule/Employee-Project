@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendEmployeesService } from '../../../services/backend-employees.service';
+import { Employee } from '../../../models/employee.model';
 
 @Component({
   selector: 'app-employees-overview',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmployeesOverviewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private backendEmployeesService: BackendEmployeesService) { }
 
   ngOnInit() {
+    this.getAllEmployees();
   }
 
+  private getAllEmployees(): void {
+    this.backendEmployeesService.getAllEmployees().subscribe(
+      (result: Employee[]) => {
+        console.log(result);
+      },
+      error => {
+        console.log('There was a problem');
+      }
+    );
+  }
 }
